@@ -1,0 +1,3 @@
+npm init -y
+npx prisma init --datasource-provider mysql (escogemos la bd en mysql)
+
