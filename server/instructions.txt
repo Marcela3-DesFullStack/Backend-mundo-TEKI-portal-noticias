@@ -1,3 +1,5 @@
 npm init -y
 npx prisma init --datasource-provider mysql (escogemos la bd en mysql)
-
+instalar la extensión prisma para autocompletado y apoyo
+instalar express para las peticiones CRUD del backend con react, angular o vue npm install express
+Se adiciona en el package json "type": "module", para utilizar import y export (no usar requiere)
