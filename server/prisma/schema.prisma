@@ -18,7 +18,7 @@ model comments {
   user_id      Int      @db.UnsignedInt
   post_id      Int      @db.UnsignedInt
   content      String   @db.VarChar(200)
-  created_at   DateTime @db.Timestamp(0)
+  created_at   DateTime @default(now()) @db.Timestamp(0)
   is_published Boolean
   posts        posts    @relation(fields: [id], references: [id], onDelete: Cascade, map: "comments_ibfk_1")
   users        users    @relation(fields: [id], references: [id], onDelete: Cascade, map: "comments_ibfk_2")
@@ -28,7 +28,7 @@ model posts {
   id          Int           @id @default(autoincrement()) @db.UnsignedInt
   title       String        @db.VarChar(255)
   content     String        @db.Text
-  created_at  DateTime      @db.Timestamp(0)
+  created_at  DateTime      @default(now()) @db.Timestamp(0)
   author      String        @db.VarChar(100)
   image_id    Int           @db.UnsignedInt
   user_id     Int           @db.UnsignedInt
