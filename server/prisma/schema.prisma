@@ -63,7 +63,7 @@ model users {
   username   String      @db.VarChar(50)
   email      String      @db.VarChar(50)
   password   String      @db.VarChar(500)
-  created_at DateTime    @db.Timestamp(0)
+  created_at DateTime    @default(now()) @db.Timestamp(0)
   is_active  Boolean
   role_id    Int         @db.UnsignedInt
   comments   comments?

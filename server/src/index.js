@@ -7,8 +7,8 @@ const app = express(); // ejecutar express
 
 app.use(express.json()) // que me ejecute datos con json
 
-app.use ("/api", postsRoutes);
-app.use ("/api", categoriesRoutes);
+app.use ("/", postsRoutes);
+app.use ("/", categoriesRoutes);
 
 app.listen(3000)
 console.log('Server on port', 3000);

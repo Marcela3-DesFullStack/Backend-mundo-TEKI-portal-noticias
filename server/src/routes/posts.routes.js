@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { PrismaClient } from '@prisma/client'
+import { prisma } from "../database/dbprisma.js"
 
 const router = Router();
-const prisma = new PrismaClient();
+
 
 //Request All posts
 router.get('/posts', async (req, res) => {
