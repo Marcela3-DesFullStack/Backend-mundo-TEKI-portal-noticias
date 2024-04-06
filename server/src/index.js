@@ -1,5 +1,5 @@
 import express from "express";
-import postsRoutes from './routes/posts.routes.js'
+import postsRoutes from './routes/postsRoutes.js'
 import categoriesRoutes from './routes/categories.routes.js'
 
 

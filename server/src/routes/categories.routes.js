@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { prisma } from "../database/dbprisma.js"
+import connectionPrisma from "../database/dbprisma.js"
 
 
 const router = Router();
 
 router.get('/categories', async (req, res) => {
-    const categories = await prisma.categories.findMany()
+    const categories = await connectionPrisma.categories.findMany()
     res.json(categories)
 })
 

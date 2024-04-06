@@ -8,3 +8,7 @@ Adicionamos en scripts nodemon
 "scripts": {
     "dev": "nodemon src/index.js",
 En las routes hay que import import { PrismaClient } from '@prisma/client'
+
+DUDAS
+1. Si quiero adicionar tres imagenes a un post. Habria que cambiar la bases de datos porque aparece INT, es decir solo una?
+la cambio por un string?
