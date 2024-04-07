@@ -4,7 +4,7 @@ const UsersModel = {
 
     getAllUsers: async () => {
         const users = await connectionPrisma.users.findMany();
-        return users
+        return users;
     },
 
     getUser: async (id) => {
@@ -15,8 +15,38 @@ const UsersModel = {
                 id: userId ,
                }, 
         });
-        // const [user] = await connection.query(`SELECT * FROM users WHERE id = '${id}'`);
         return user;
     },
+
+    addUser : async (data) => {
+        body.created_at = new Date(); 
+        const newUser = await connectionPrisma.users.create({
+            data:  data
+        })
+        return newUser
+    },
+
+    updateUser: async (id, body) => {
+        body.created_at = new Date();
+        const userId = parseInt(id);
+        const updateUser= await connectionPrisma.users.update({
+            where: {
+                id: userId ,
+                
+               }, 
+            data: body
+        });
+        return updateUser;
+    },
+    deleteUser: async (id) => {
+        const userId = parseInt(id);
+        const deleteUser = await connectionPrisma.users.delete({
+            where: {
+                id: userId ,
+                }, 
+        });
+        return deleteUser;
+    },
 }
+
 export default UsersModel

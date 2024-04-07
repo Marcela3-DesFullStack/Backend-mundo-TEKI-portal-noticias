@@ -36,7 +36,7 @@ const PostsController = {
                     return;
                   
                 } 
-                await PostsModel.addPost( req.body);
+                await PostsModel.addPost( req.body );
                 res.status(201).json({ message: 'Post created succeeded' });
                 return;
                     
