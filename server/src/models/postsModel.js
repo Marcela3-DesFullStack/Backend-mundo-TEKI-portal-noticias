@@ -9,10 +9,11 @@ const PostsModel = {
     },
 
     getPost: async (id) => {
+        const postId = parseInt(id);
         const post = await connectionPrisma.posts.findUnique({
             
             where: {
-                id: parseInt(id) ,
+                id: postId ,
                }, 
         });
         return post;
@@ -28,9 +29,10 @@ const PostsModel = {
 
     updatePost: async (id, body) => {
         body.created_at = new Date();
+        const postId = parseInt(id);
         const updatePost = await connectionPrisma.posts.update({
             where: {
-                id: parseInt(id) ,
+                id: postId ,
                 
                }, 
             data: body
@@ -39,9 +41,10 @@ const PostsModel = {
     },
 
     deletePost: async (id) => {
+        const postId = parseInt(id);
         const deletePost = await connectionPrisma.posts.delete({
             where: {
-                id: parseInt(id) ,
+                id: postId ,
                 }, 
         });
         return deletePost;

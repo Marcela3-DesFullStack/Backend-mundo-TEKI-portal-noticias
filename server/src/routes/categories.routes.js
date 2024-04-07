@@ -1,12 +1,13 @@
 import { Router } from "express";
-import connectionPrisma from "../database/dbprisma.js"
+import CategoriesController from "../controllers/categoriesController.js";
 
 
-const router = Router();
+const CategoriesRouter = Router();
 
-router.get('/categories', async (req, res) => {
-    const categories = await connectionPrisma.categories.findMany()
-    res.json(categories)
-})
+CategoriesRouter.route("/categories").get(CategoriesController.getAllCategories);
+CategoriesRouter.route("/categories/:id").get(CategoriesController.getCategory);
+CategoriesRouter.route("/categories").post(CategoriesController.addCategory);
+CategoriesRouter.route("/categories/:id").put(CategoriesController.updateCategory);
+CategoriesRouter.route("/categories/:id").delete(CategoriesController.deleteCategory);
 
-export default router
+export default CategoriesRouter;
