@@ -36,7 +36,7 @@ const CategoriesController = {
                     return;
                   
                 } 
-                await CategoriesModel.addCategory( req.body);
+                await CategoriesModel.addCategory( {name });
                 res.status(201).json({ message: 'Category created succeeded' });
                 return;
                     

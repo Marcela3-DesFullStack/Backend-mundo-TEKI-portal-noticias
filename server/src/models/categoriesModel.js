@@ -5,7 +5,7 @@ const CategoriesModel = {
 
     getAllCategories: async () => {
         const categories = await connectionPrisma.categories.findMany();
-        return categories
+        return categories;
     },
 
     getCategory: async (id) => {
@@ -18,16 +18,14 @@ const CategoriesModel = {
         return category;
     },
 
-    addCategory: async (body) => {
-        body.created_at = new Date(); 
+    addCategory: async (data) => {
         const newCategory = await connectionPrisma.categories.create({
-            data:  body
+            data:  data
         })
         return newCategory
     },
 
     updateCategory: async (id, body) => {
-        body.created_at = new Date();
         const updateCategory = await connectionPrisma.categories.update({
             where: {
                 id: parseInt(id) ,
@@ -38,7 +36,7 @@ const CategoriesModel = {
         return updateCategory;
     },
 
-    deleteCatgory: async (id) => {
+    deleteCategory: async (id) => {
         const deleteCategory = await connectionPrisma.categories.delete({
             where: {
                 id: parseInt(id) ,
