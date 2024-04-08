@@ -7,6 +7,7 @@ const UsersRouter = Router();
 UsersRouter.route("/").get(UsersController.getAllUsers);
 UsersRouter.route("/:id").get(UsersController.getUser);
 UsersRouter.route("/").post(UsersController.addUser);
-UsersRouter.route("/").put(UsersController.updateUser);
-UsersRouter.route("/").delete(UsersController.deleteUser);
+UsersRouter.route("/:id").put(UsersController.updateUser);
+UsersRouter.route("/:id").delete(UsersController.deleteUser);
+
 export default UsersRouter;

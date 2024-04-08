@@ -18,10 +18,10 @@ const UsersModel = {
         return user;
     },
 
-    addUser : async (data) => {
+    addUser : async (body) => {
         body.created_at = new Date(); 
         const newUser = await connectionPrisma.users.create({
-            data:  data
+            data:  body
         })
         return newUser
     },
@@ -38,6 +38,7 @@ const UsersModel = {
         });
         return updateUser;
     },
+    
     deleteUser: async (id) => {
         const userId = parseInt(id);
         const deleteUser = await connectionPrisma.users.delete({

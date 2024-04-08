@@ -30,7 +30,7 @@ const UsersController = {
     addUser : async (req, res) => {
         try {
             const { username, email, password , is_active, role_id } = req.body;
-                if ( !username || !email || !password || is_active || role_id ) {
+                if ( !username || !email || !password ) {
                     res.status(400).json({ message: 'Please enter complete information from user' });
                     return;
                   
@@ -49,12 +49,12 @@ const UsersController = {
         try {
             const { id } = req.params;
             const { username, email, password , is_active, role_id } = req.body;
-                if ( !username || !email || !password || is_active || role_id ) {
+                if ( !username || !email || !password ) {
                     res.status(400).json({ message: 'Please enter complete information from user' });
                     return;
                   
                 } 
-                await UserModel.updateUser( id, req.body );
+                await UsersModel.updateUser( id, req.body );
                 res.status(201).json({ message: 'User up to date' });
                 return;
                     

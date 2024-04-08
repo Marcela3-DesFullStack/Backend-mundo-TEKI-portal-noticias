@@ -64,8 +64,8 @@ model users {
   email      String      @db.VarChar(50) @unique
   password   String      @db.VarChar(500)
   created_at DateTime    @default(now()) @db.Timestamp(0)
-  is_active  Boolean     @default(false)
-  role_id    Int         @db.UnsignedInt  @default(1)
+  is_active  Boolean     @default(true)
+  role_id    Int         @db.UnsignedInt  @default(0)
   comments   comments?
   posts      posts[]
   user_role  user_role[]
