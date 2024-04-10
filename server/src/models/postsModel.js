@@ -24,7 +24,7 @@ const PostsModel = {
         const newPost = await connectionPrisma.posts.create({
             data:  body
         })
-        return newPost
+        return newPost;
     },
 
     updatePost: async (id, body) => {

@@ -31,7 +31,7 @@ const PostsController = {
     addPost : async (req, res) => {
         try {
             const { title, content, author, image_id, user_id, category_id } = req.body;
-                if ( !title || !content || !author || !image_id || !user_id || !category_id) {
+                if ( !title || !content || !author || !image_id || !user_id || !category_id ) {
                     res.status(400).json({ message: 'Please enter complete information from post' });
                     return;
                   
