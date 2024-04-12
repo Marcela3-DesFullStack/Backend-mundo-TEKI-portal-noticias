@@ -8,67 +8,23 @@ datasource db {
 }
 
 model categories {
-  id    Int    @id @default(autoincrement()) @db.UnsignedInt
-  name  String @db.VarChar(100)
-  posts posts?
+  id    Int     @id @default(autoincrement()) @db.UnsignedInt
+  name  String  @db.VarChar(100)
+  posts posts[]
 }
 
 model comments {
-  id           Int      @id @default(autoincrement()) @db.UnsignedInt
-  user_id      Int      @db.UnsignedInt
-  post_id      Int      @db.UnsignedInt
-  content      String   @db.VarChar(200)
-  created_at   DateTime @default(now()) @db.Timestamp(0)
+  id           Int       @id @default(autoincrement()) @db.UnsignedInt
+  user_id      Int       @db.UnsignedInt
+  post_id      Int       @db.UnsignedInt
+  content      String    @db.VarChar(200)
+  created_at   DateTime? @default(now()) @db.Timestamp(0)
   is_published Boolean
-  posts        posts    @relation(fields: [id], references: [id], onDelete: Cascade, map: "comments_ibfk_1")
-  users        users    @relation(fields: [id], references: [id], onDelete: Cascade, map: "comments_ibfk_2")
-}
+  users        users     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_ibfk_1")
+  posts        posts     @relation(fields: [post_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_ibfk_2")
 
-model posts {
-  id          Int           @id @default(autoincrement()) @db.UnsignedInt
-  title       String        @db.VarChar(255)
-  content     String        @db.Text
-  created_at  DateTime      @default(now()) @db.Timestamp(0)
-  author      String        @db.VarChar(100)
-  image_id    Int           @db.UnsignedInt
-  user_id     Int           @db.UnsignedInt 
-  category_id Int           @db.UnsignedInt
-  comments    comments?
-  post_images post_images[]
-  users       users         @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "posts_ibfk_1")
-  categories  categories    @relation(fields: [id], references: [id], onDelete: Cascade, map: "posts_ibfk_2")
-
+  @@index([post_id], map: "post_id")
   @@index([user_id], map: "user_id")
-}
-
-model roles {
-  id        Int         @id @default(autoincrement()) @db.UnsignedInt
-  role_type Int         @db.UnsignedInt
-  user_role user_role[]
-}
-
-model user_role {
-  id      Int   @id @default(autoincrement()) @db.UnsignedInt
-  user_id Int   @db.UnsignedInt
-  role_id Int   @db.UnsignedInt
-  users   roles @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "user_role_ibfk_1")
-  roles   users @relation(fields: [role_id], references: [id], onDelete: Cascade, map: "user_role_ibfk_2")
-
-  @@index([role_id], map: "role_id")
-  @@index([user_id], map: "user_id")
-}
-
-model users {
-  id         Int         @id @default(autoincrement()) @db.UnsignedInt
-  username   String      @db.VarChar(50)
-  email      String      @db.VarChar(50) @unique
-  password   String      @db.VarChar(500)
-  created_at DateTime    @default(now()) @db.Timestamp(0)
-  is_active  Boolean     @default(true)
-  role_id    Int         @db.UnsignedInt  @default(0)
-  comments   comments?
-  posts      posts[]
-  user_role  user_role[]
 }
 
 model images {
@@ -76,16 +32,55 @@ model images {
   image_url   String        @db.VarChar(255)
   name        String        @db.VarChar(100)
   post_images post_images[]
+  posts       posts[]
 }
 
 model post_images {
   id       Int    @id @default(autoincrement()) @db.UnsignedInt
   post_id  Int    @db.UnsignedInt
   image_id Int    @db.UnsignedInt
-  
-  posts    posts  @relation(fields: [image_id], references: [id], onDelete: Cascade, map: "post_images_ibfk_1")
-  images   images @relation(fields: [post_id], references: [id], onDelete: Cascade, map: "post_images_ibfk_2")
+  posts    posts  @relation(fields: [post_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "post_images_ibfk_1")
+  images   images @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "post_images_ibfk_2")
 
   @@index([image_id], map: "image_id")
   @@index([post_id], map: "post_id")
+}
+
+model posts {
+  id          Int           @id @default(autoincrement()) @db.UnsignedInt
+  title       String        @db.VarChar(255)
+  description String        @db.Text
+  content     String        @db.Text
+  created_at  DateTime?     @default(now()) @db.Timestamp(0)
+  author      String        @db.VarChar(100)
+  image_id    Int           @db.UnsignedInt
+  user_id     Int           @db.UnsignedInt
+  category_id Int           @db.UnsignedInt
+  is_active   Boolean       @default(true)
+  comments    comments[]
+  post_images post_images[]
+  images      images        @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_ibfk_1")
+  users       users         @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_ibfk_2")
+  categories  categories    @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_ibfk_3")
+
+  @@index([category_id], map: "category_id")
+  @@index([image_id], map: "image_id")
+  @@index([user_id], map: "user_id")
+}
+
+model roles {
+  id        Int @id @default(autoincrement()) @db.UnsignedInt
+  role_type Int @db.UnsignedInt
+}
+
+model users {
+  id         Int        @id @default(autoincrement()) @db.UnsignedInt
+  username   String     @db.VarChar(50)
+  email      String     @db.VarChar(50)
+  password   String     @db.VarChar(500)
+  created_at DateTime?  @default(now()) @db.Timestamp(0)
+  is_active  Boolean    @default(true)
+  role_id    Int        @default(0) @db.UnsignedInt
+  comments   comments[]
+  posts      posts[]
 }
