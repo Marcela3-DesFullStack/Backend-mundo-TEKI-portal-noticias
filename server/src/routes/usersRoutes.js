@@ -10,4 +10,8 @@ UsersRouter.route("/").post(UsersController.addUser);
 UsersRouter.route("/:id").put(UsersController.updateUser);
 UsersRouter.route("/:id").delete(UsersController.deleteUser);
 
+// Login route to POST users
+UsersRouter.route("/login").post(UsersController.loginUser);
+
+
 export default UsersRouter;

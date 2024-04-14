@@ -1,4 +1,5 @@
 import UsersModel from "../models/usersModel.js";
+import passwEncrypt from "../utils/passwEncrypt.js";
 
 const UsersController = {
 
@@ -74,6 +75,42 @@ const UsersController = {
             res.status(500).json({ message: 'Error to try deleting user' });
         }
     },
+    // User´s Login and authentication
+    loginUser : async (req , res ) => {
+        try {
+            // Request of user´s fields
+            const { username, password, email } = req.body;
+            // Call UsersModel function to look for user into body
+            const user = await UsersModel.getUserBy(username, email) ;
+            // Verifying the user doesn´t found
+            if (!user) {
+                res.status(404).json({ message: 'User not found'});
+                return;
+            }
+            // User Found
+            console.log("User Found: "+ JSON.stringify(user));
 
-}
-    export default UsersController;
+         
+
+
+
+        } 
+        catch (error) {
+            console.log(error);
+            res.status(500).json({ message: 'Error when you logged in' });
+        }
+            
+        }
+    
+    
+
+    }
+
+
+
+
+
+
+
+
+export default UsersController;

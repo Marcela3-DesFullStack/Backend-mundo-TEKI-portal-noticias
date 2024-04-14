@@ -9,11 +9,23 @@ const UsersModel = {
 
     getUser: async (id) => {
         const userId = parseInt(id)
-        const user = await connectionPrisma.users.findUnique({
+        const user = await connectionPrisma.users.findFirst({
             
             where: {
                 id: userId ,
                }, 
+        });
+        return user;
+    },
+
+    getUserBy: async (username, email) => {
+        const user = await connectionPrisma.users.findFirst ({
+            where: {
+                OR: [
+                    {username: username},
+                    { email: email}
+                ]
+            }
         });
         return user;
     },
