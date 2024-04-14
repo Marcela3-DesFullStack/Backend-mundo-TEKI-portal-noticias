@@ -1,5 +1,5 @@
 import UsersModel from "../models/usersModel.js";
-import passwEncrypt from "../utils/passwEncrypt.js";
+import  encrypt from "../utils/passwEncrypt.js";
 
 const UsersController = {
 
@@ -34,12 +34,13 @@ const UsersController = {
                 if ( !username || !email || !password ) {
                     res.status(400).json({ message: 'Please enter complete information from user' });
                     return;
-                  
-                } 
-                await UsersModel.addUser( req.body );
-                res.status(201).json({ message: 'User created succeeded' });
-                return;
-                    
+                    }
+                     // Getting encrypted password
+                    const passwEncrypt = await encrypt(password);
+                    const newUser = await UsersModel.addUser(username, email, passwEncrypt , is_active, role_id);
+                    console.log(newUser);
+                    res.status(201).json({ message: 'User ${newUser.username} created succeeded', redirect:"/"});
+                                       
         } catch (error) {
             console.log(error);
             res.status(500).json({ message: 'It was not possible create user' });
@@ -90,8 +91,7 @@ const UsersController = {
             // User Found
             console.log("User Found: "+ JSON.stringify(user));
 
-         
-
+            
 
 
         } 

@@ -30,10 +30,17 @@ const UsersModel = {
         return user;
     },
 
-    addUser : async (body) => {
-        body.created_at = new Date(); 
+    addUser : async (username, email, password, is_active, role_id) => {
+        const created_at = new Date(); 
         const newUser = await connectionPrisma.users.create({
-            data:  body
+            data: {
+                username,
+                email,
+                password,
+                is_active,
+                role_id,
+                created_at
+            }
         })
         return newUser
     },
