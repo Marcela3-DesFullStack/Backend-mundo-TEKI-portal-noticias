@@ -18,12 +18,13 @@ const UsersModel = {
         return user;
     },
 
-    getUserBy: async (username, email) => {
+    getUserBy: async (username, email, password ) => {
         const user = await connectionPrisma.users.findFirst ({
             where: {
                 OR: [
                     {username: username},
-                    { email: email}
+                    { email: email},
+                    { password: password}
                 ]
             }
         });

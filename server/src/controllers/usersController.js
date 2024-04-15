@@ -1,5 +1,5 @@
 import UsersModel from "../models/usersModel.js";
-import  encrypt from "../utils/passwEncrypt.js";
+import { encrypt, verify } from "../utils/passwEncrypt.js";
 
 const UsersController = {
 
@@ -36,10 +36,11 @@ const UsersController = {
                     return;
                     }
                      // Getting encrypted password
-                    const passwEncrypt = await encrypt(password);
-                    const newUser = await UsersModel.addUser(username, email, passwEncrypt , is_active, role_id);
+                    const passwEncrypt = await encrypt( password );
+                    console.log(passwEncrypt);
+                    const newUser = await UsersModel.addUser( username, email, passwEncrypt , is_active, role_id );
                     console.log(newUser);
-                    res.status(201).json({ message: 'User ${newUser.username} created succeeded', redirect:"/"});
+                    res.status(201).json({ message: 'User created succeeded', redirect:"/"});
                                        
         } catch (error) {
             console.log(error);
@@ -79,20 +80,21 @@ const UsersController = {
     // User´s Login and authentication
     loginUser : async (req , res ) => {
         try {
-            // Request of user´s fields
-            const { username, password, email } = req.body;
-            // Call UsersModel function to look for user into body
-            const user = await UsersModel.getUserBy(username, email) ;
-            // Verifying the user doesn´t found
-            if (!user) {
-                res.status(404).json({ message: 'User not found'});
+            // // Request of user´s fields
+            const password = req.body.password;
+            const email = req.body.email;
+            if ( !password || !email ) {
+                res.status(404).json({ message: 'Please enter information into all fields'});
                 return;
             }
-            // User Found
-            console.log("User Found: "+ JSON.stringify(user));
-
-            
-
+            // Are there user?
+            const verifyUser = await UsersModel.getUserBy( username, password );// se pide password para evitar ataques de seguridad
+            if (!verifyUser){
+                return res.status(400).send({status: "Error", message:"Error when logging in"});
+            }
+            // Verifying Password (hash)
+            const loginVerified = await verify(password, verifyUser.password);
+            console.log(loginVerified);
 
         } 
         catch (error) {

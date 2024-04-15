@@ -11,9 +11,9 @@ const app = express(); // ejecutar express
 
 app.use(express.json()) // que me ejecute datos con json
 
-app.use ("/posts/", postsRoutes);
-app.use ("/categories/", categoriesRoutes);
-app.use ("/users/", usersRoutes);
+app.use ("/posts", postsRoutes);
+app.use ("/categories", categoriesRoutes);
+app.use ("/users", usersRoutes);
 app.use ("/comments", commentsRoutes);
 app.use ("/images", imagesRoutes);
 
