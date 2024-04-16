@@ -15,4 +15,5 @@ la cambio por un string?
 
 
 JWT PARA AUTENTICACIONES
-Instalar express, cors y npm install bcryptjs
+Instalar express, cors y npm install bcrypt
+npm install jsonwebtoken y dotenv
