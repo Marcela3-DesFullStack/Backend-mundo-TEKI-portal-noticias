@@ -1,6 +1,5 @@
 import UsersModel from "../models/usersModel.js";
-import { generateToken } from "../utils/jwtHandler.js";
-import { encrypt, verify } from "../utils/passwEncrypt.js";
+import { encrypt } from "../utils/passwEncrypt.js";
 
 const UsersController = {
 
@@ -78,54 +77,6 @@ const UsersController = {
             res.status(500).json({ message: 'Error to try deleting user' });
         }
     },
-    // User´s Login and authentication
-    loginUser : async (req , res ) => {
-        try {
-            // // Request of user´s fields
-            const password = req.body.password;
-            const email = req.body.email;
-            if ( !password || !email ) {
-                res.status(404).json({ message: 'Please enter information into all fields'});
-                return;
-            }
-            // Are there user?
-            const verifyUser = await UsersModel.getUserBy( email, password );// se pide password para evitar ataques de seguridad
-           
-            if (!verifyUser){
-                return res.status(400).send({status: "Error", message:"Error when logging in"});
-            }
-           
-            // Verifying Password Right (hash)
-            const loginRight = await verify(password, verifyUser.password);
-            console.log (loginRight);         
-            // Generating token with ID user
-            if (loginRight) {
-                const token = await generateToken(verifyUser.password);
-                //  Taking out username and ID to include into response
-                const userName = verifyUser.username ;
-                const userId = verifyUser.id;
-                
-                const data = {
-                    token,
-                    userId,
-                    userName                
-                };
-            // If authentication is suceeded, sending response with token, ID and username
-                res.status(200).json({ message: 'User Logged in',
-                    data: data                   
-                });
-                return;
-            }
-                res.status(401).json({ message: 'Error when logging' });
-                return;  
-
-        }    
-        catch (error) {
-            console.log(error);
-            res.status(500).json({ message: 'Error when you logged in' });
-        }
-            
-        },
     }
 
 export default UsersController;
