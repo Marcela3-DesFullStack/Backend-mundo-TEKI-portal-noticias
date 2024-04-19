@@ -25,15 +25,15 @@ const LoginController = {
             }
 
             // Generate a JWT token using the user's ID
-            const token = generateToken(user.id);
+            const token = await generateToken(user.id);
+            
+            
+            // // Verify the generated JWT token
+            // const decodedToken = verifyToken(token);
+            // if (!decodedToken) {
+            //     return res.status(400).json({ status: 'Error', message: 'Invalid token' });
+            // }
             console.log("Token generado:", token);
-            
-            // Verify the generated JWT token
-            const decodedToken = verifyToken(token);
-            if (!decodedToken) {
-                return res.status(400).json({ status: 'Error', message: 'Invalid token' });
-            }
-            
             // Send the JWT token as response
             return res.status(200).json({ message: 'User logged in successfully', token: token, userId: user.id, userName: user.username, role: user.role_id });
             

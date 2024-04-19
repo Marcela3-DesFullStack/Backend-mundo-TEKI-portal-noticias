@@ -22,11 +22,10 @@ export async function generateToken(userId) {
 }
 
 // Verifying token
-export async function verifyToken(req) {
+export async function verifyToken(token) {
     try {
-
         //Veifying Token and secret key
-        const isMatch = jwt.verify(bearerToken, JWT_SECRET);
+        const isMatch = jwt.verify(token, JWT_SECRET);
         return isMatch;
     } catch (error) {
         console.error("Bearer Token failed:", error);
