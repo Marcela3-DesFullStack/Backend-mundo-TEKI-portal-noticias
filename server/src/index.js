@@ -7,6 +7,7 @@ import commentsRoutes from './routes/commentsRoutes.js'
 import imagesRoutes from './routes/imagesRoutes.js'
 
 
+
 const app = express(); // ejecutar express
 
 app.use(express.json()) // que me ejecute datos con json
@@ -16,6 +17,7 @@ app.use ("/categories", categoriesRoutes);
 app.use ("/users", usersRoutes);
 app.use ("/comments", commentsRoutes);
 app.use ("/images", imagesRoutes);
+
 
 
 app.listen(3000)

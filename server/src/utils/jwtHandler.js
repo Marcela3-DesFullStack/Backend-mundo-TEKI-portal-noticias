@@ -24,14 +24,12 @@ export async function generateToken(userId) {
 // Verifying token
 export async function verifyToken(req) {
     try {
-        // // Obtener el token del encabezado de autorización
-        const token = req.headers.authorization.split(' ')[1]; // Formato de encabezado "Bearer token"
 
-        // Verificar el token y la clave secreta
-        const isMatch = jwt.verify(token, JWT_SECRET);
+        //Veifying Token and secret key
+        const isMatch = jwt.verify(bearerToken, JWT_SECRET);
         return isMatch;
     } catch (error) {
-        console.error("Verified Token failed:", error);
+        console.error("Bearer Token failed:", error);
         return false;
     }
 }

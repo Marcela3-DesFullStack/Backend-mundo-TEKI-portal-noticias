@@ -34,10 +34,10 @@ const LoginController = {
                 return res.status(400).json({ status: 'Error', message: 'Invalid token' });
             }
             
-
             // Send the JWT token as response
-            return res.status(200).json({ message: 'User logged in successfully', token, userId: user.id, userName: user.username });
+            return res.status(200).json({ message: 'User logged in successfully', token: token, userId: user.id, userName: user.username, role: user.role_id });
             
+
         } catch (error) {
             console.error(error);
             return res.status(500).json({ message: 'Error logging in' });

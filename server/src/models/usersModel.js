@@ -29,6 +29,16 @@ const UsersModel = {
         });
         return user;
     },
+    getUserById: async (id) => {
+       
+        const user = await connectionPrisma.users.findUnique({
+            where: {
+                id: id
+                }
+            });
+            return user;
+       
+    },
 
     addUser : async (username, email, password, is_active, role_id) => {
         const created_at = new Date(); 
