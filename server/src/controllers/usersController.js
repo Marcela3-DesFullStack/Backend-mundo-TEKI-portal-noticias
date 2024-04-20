@@ -35,6 +35,7 @@ const UsersController = {
                     res.status(400).json({ message: 'Please enter complete information from user' });
                     return;
                     }
+                
                      // Getting encrypted password
                     const passwEncrypt = await encrypt( password );
                     console.log(passwEncrypt);

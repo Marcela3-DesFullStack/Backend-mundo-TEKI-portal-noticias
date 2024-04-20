@@ -17,3 +17,16 @@ la cambio por un string?
 JWT PARA AUTENTICACIONES
 Instalar express, cors y npm install bcrypt
 npm install jsonwebtoken y dotenv
+
+TEST
+npm i jest supertest
+"scripts": 
+    "dev": "nodemon src/index.js",
+    "test": "jest"
+
+REDIRECCIONAR PAGINAS LOGIN
+En el JSON que estás enviando desde tu controlador de inicio de sesión, estás incluyendo un campo llamado "redirect" que especifica la ruta a la que deseas redirigir al usuario. En tu caso, has configurado esta ruta como "/admin".
+
+Sin embargo, ten en cuenta que enviar este campo "redirect" como parte de la respuesta JSON no provocará automáticamente una redirección en el cliente. El cliente (por ejemplo, un navegador web o una aplicación móvil) deberá interpretar este campo y realizar la redirección correspondiente.
+
+Por ejemplo, en una aplicación web, podrías usar JavaScript para leer el valor del campo "redirect" en la respuesta JSON y luego usar window.location.href para redirigir al usuario a la ruta especificada. En una aplicación móvil, tendrías que manejar la redirección de manera similar según el marco o la plataforma que estés utilizando.

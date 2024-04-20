@@ -24,11 +24,13 @@ const UsersModel = {
                 OR: [
                     { email: email},
                     
+                    
                 ]
             }
         });
         return user;
     },
+    
     getUserById: async (id) => {
        
         const user = await connectionPrisma.users.findUnique({

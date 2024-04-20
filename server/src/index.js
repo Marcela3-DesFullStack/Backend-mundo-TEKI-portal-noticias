@@ -1,5 +1,4 @@
 import express from "express";
-import cors from "cors";
 import postsRoutes from './routes/postsRoutes.js'
 import categoriesRoutes from './routes/categoriesRoutes.js'
 import usersRoutes from './routes/usersRoutes.js'
@@ -17,7 +16,7 @@ app.use ("/categories", categoriesRoutes);
 app.use ("/users", usersRoutes);
 app.use ("/comments", commentsRoutes);
 app.use ("/images", imagesRoutes);
-
+app.use ("/admin", usersRoutes);
 
 
 app.listen(3000)
