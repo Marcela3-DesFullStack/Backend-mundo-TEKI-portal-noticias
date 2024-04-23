@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:07062021@localhost:3306/mundo_teki"
+  url      = env("DATABASE_URL")
 }
 
 model categories {
