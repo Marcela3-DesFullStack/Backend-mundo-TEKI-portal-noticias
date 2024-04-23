@@ -14,63 +14,48 @@ model categories {
 }
 
 model comments {
-  id           Int       @id @default(autoincrement()) @db.UnsignedInt
-  user_id      Int       @db.UnsignedInt
-  post_id      Int       @db.UnsignedInt
-  content      String    @db.VarChar(200)
-  created_at   DateTime? @default(now()) @db.Timestamp(0)
+  id           Int      @id @default(autoincrement()) @db.UnsignedInt
+  user_id      Int      @db.UnsignedInt
+  post_id      Int      @db.UnsignedInt
+  content      String   @db.VarChar(200)
+  created_at   DateTime @default(now()) @db.Timestamp(0)
   is_published Boolean
-  users        users     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_ibfk_1")
-  posts        posts     @relation(fields: [post_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_ibfk_2")
+  posts        posts    @relation(fields: [post_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_post_id_foreign")
+  users        users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_user_id_foreign")
 
-  @@index([post_id], map: "post_id")
-  @@index([user_id], map: "user_id")
+  @@index([post_id], map: "comments_post_id_foreign")
+  @@index([user_id], map: "comments_user_id_foreign")
 }
 
 model images {
-  id          Int           @id @default(autoincrement()) @db.UnsignedInt
-  image_url   String        @db.VarChar(255)
-  name        String        @db.VarChar(100)
-  post_images post_images[]
-  posts       posts[]
-}
-
-model post_images {
-  id       Int    @id @default(autoincrement()) @db.UnsignedInt
-  post_id  Int    @db.UnsignedInt
-  image_id Int    @db.UnsignedInt
-  posts    posts  @relation(fields: [post_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "post_images_ibfk_1")
-  images   images @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "post_images_ibfk_2")
-
-  @@index([image_id], map: "image_id")
-  @@index([post_id], map: "post_id")
+  id        Int    @id @default(autoincrement()) @db.UnsignedInt
+  image_url String @db.VarChar(255)
+  name      String @db.VarChar(100)
 }
 
 model posts {
-  id          Int           @id @default(autoincrement()) @db.UnsignedInt
-  title       String        @db.VarChar(255)
-  description String        @db.Text
-  content     String        @db.Text
-  created_at  DateTime?     @default(now()) @db.Timestamp(0)
-  author      String        @db.VarChar(100)
-  image_id    Int           @db.UnsignedInt
-  user_id     Int           @db.UnsignedInt
-  category_id Int           @db.UnsignedInt
-  is_active   Boolean       @default(true)
+  id          Int        @id @default(autoincrement()) @db.UnsignedInt
+  title       String     @db.VarChar(255)
+  content     String     @db.Text
+  created_at  DateTime   @default(now()) @db.Timestamp(0)
+  author      String     @db.VarChar(100)
+  image_url   String     @db.VarChar(500)
+  user_id     Int        @db.UnsignedInt
+  category_id Int        @db.UnsignedInt
+  description String     @db.Text
+  is_active   Boolean    @default(true) @map("is active")
   comments    comments[]
-  post_images post_images[]
-  images      images        @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_ibfk_1")
-  users       users         @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_ibfk_2")
-  categories  categories    @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_ibfk_3")
+  categories  categories @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_category_id_foreign")
+  users       users      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "posts_user_id_foreign")
 
-  @@index([category_id], map: "category_id")
-  @@index([image_id], map: "image_id")
-  @@index([user_id], map: "user_id")
+  @@index([category_id], map: "posts_category_id_foreign")
+  @@index([user_id], map: "posts_user_id_foreign")
 }
 
 model roles {
-  id        Int @id @default(autoincrement()) @db.UnsignedInt
-  role_type Int @db.UnsignedInt
+  id        Int   @id @default(autoincrement()) @db.UnsignedInt
+  role_type Int   @db.UnsignedInt
+  users     users @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "roles_id_foreign")
 }
 
 model users {
@@ -78,9 +63,10 @@ model users {
   username   String     @db.VarChar(50)
   email      String     @db.VarChar(50)
   password   String     @db.VarChar(500)
-  created_at DateTime?  @default(now()) @db.Timestamp(0)
+  created_at DateTime   @default(now()) @db.Timestamp(0)
   is_active  Boolean    @default(true)
   role_id    Int        @default(0) @db.UnsignedInt
   comments   comments[]
   posts      posts[]
+  roles      roles?
 }
