@@ -4,12 +4,15 @@ import categoriesRoutes from './routes/categoriesRoutes.js'
 import usersRoutes from './routes/usersRoutes.js'
 import commentsRoutes from './routes/commentsRoutes.js'
 import imagesRoutes from './routes/imagesRoutes.js'
+import cors from 'cors'
+
 
 
 
 const app = express(); // ejecutar express
 
 app.use(express.json()) // que me ejecute datos con json
+app.use(cors())
 
 app.use ("/posts", postsRoutes);
 app.use ("/categories", categoriesRoutes);
