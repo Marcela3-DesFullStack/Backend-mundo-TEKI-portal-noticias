@@ -11,7 +11,6 @@ const PostsModel = {
     getPost: async (id) => {
         const postId = parseInt(id);
         const post = await connectionPrisma.posts.findUnique({
-            
             where: {
                 id: postId ,
                }, 
@@ -33,7 +32,6 @@ const PostsModel = {
         const updatePost = await connectionPrisma.posts.update({
             where: {
                 id: postId ,
-                
                }, 
             data: body
         });
