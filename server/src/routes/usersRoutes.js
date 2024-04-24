@@ -1,7 +1,6 @@
 import { Router } from "express";
 import UsersController from "../controllers/usersController.js";
 import LoginController from "../controllers/loginController.js";
-// import { isAdmin } from "../middlewares/sessionMiddleware.js";
 // import { authAdmin } from "../middlewares/sessionMiddleware.js";
 
 const UsersRouter = Router();

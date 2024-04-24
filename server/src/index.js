@@ -7,8 +7,6 @@ import imagesRoutes from './routes/imagesRoutes.js'
 import cors from 'cors'
 
 
-
-
 const app = express(); // ejecutar express
 
 app.use(express.json()) // que me ejecute datos con json
@@ -24,3 +22,5 @@ app.use ("/admin", usersRoutes);
 
 app.listen(3000)
 console.log('Server on port', 3000);
+
+export default app;
