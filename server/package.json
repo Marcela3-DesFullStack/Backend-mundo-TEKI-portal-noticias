@@ -4,9 +4,13 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
+  },
   "scripts": {
     "dev": "nodemon src/index.js",
     "test": "jest"
+   
   },
   "keywords": [],
   "author": "",
