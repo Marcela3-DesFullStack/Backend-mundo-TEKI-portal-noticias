@@ -30,8 +30,8 @@ const PostsController = {
 
     addPost : async (req, res) => {
         try {
-            const { title, content, author, image_url, user_id, category_id } = req.body;
-                if ( !title || !content || !author || !image_url || !user_id || !category_id ) {
+            const { title, content, author, image_url, user_id, category_id, description } = req.body;
+                if ( !title || !content || !author || !image_url || !user_id || !category_id || !description) {
                     res.status(400).json({ message: 'Please enter complete information from post' });
                     return;
                   
@@ -49,8 +49,8 @@ const PostsController = {
     updatePost : async (req, res) => {
         try {
             const { id } = req.params;
-            const { title, content, author, image_url, user_id, category_id } = req.body;
-                if ( !title || !content || !author || !image_url || !user_id || !category_id) {
+            const { title, content, author, image_url, user_id, category_id, description} = req.body;
+                if ( !title || !content || !author || !image_url || !user_id || !category_id || !description ) {
                     res.status(400).json({ message: 'Please enter complete information from post' });
                     return;
                   
